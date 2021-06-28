@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .todoList:hover{
+            color: red;
+            cursor: pointer;
+            text-decoration-line: line-through;
+        }
+    </style>
+</head>
+<body>
+    <section>
+        <div class="header">
+            <h1>할일만들기</h1>
+            <input type="text"/>
+            <button>클릭</button>
+        </div>
+        <div class="list"></div>
+    </section>
+</body>
+<script>
+
+    let ItemList=[] //아이템 리스트 만들 배열 생성
+    const InputButton = document.querySelector('button')
+    let Todo = document.querySelector('input')
+      
+    Todo.focus(); //input에 커서 깜빡이기
+    InputButton,addEventListener('keydown', function(e){  //엔터키 눌렀을 때 이벤트 발생
+        if(e.key === "Enter"){
+            Click();
+        }
+    })
+
+    InputButton,addEventListener("click", Click); // 마우스로 버튼 클릭시 이벤트 발생
+
+    //할 일 추가
+    function Click (){
+        let ListHouse = document.querySelector('.list')
+        let TodoList = document.createElement('div');
+        TodoList.className="todoList" // 동적 div에 클래스이름 생성
+        //리스트생성
+        TodoList.innerHTML = Todo.value;
+        ListHouse.appendChild(TodoList);
+
+        //빈값 들어오는거 방지
+        if(TodoList.innerHTML != "" ){
+            ItemList.push(TodoList.innerHTML); //배열에 input값 넣기
+            Todo.value = ""; //input창 초기화
+        }
+         console.log(ItemList);       
+        //리스트 클릭시 리스트 삭제
+        TodoList.addEventListener("click",Delete)
+        function Delete() {
+            let todoList = document.querySelector('.todoList')
+            let ListHouse = document.querySelector('.list')
+            //리스트 삭제
+            ListHouse.removeChild(this); 
+            //배열 삭제
+            ItemList.pop(this);
+            console.log(ItemList);
+        }
+    }
+
+</script>
+</html>
